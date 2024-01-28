@@ -1,6 +1,5 @@
 ---
-title: "Daniel Amieva Rodriguez's CV"
-author: Daniel Amieva Rodriguez
+title: "Aketzali Natividad Martinez's CV"
 date: "`r Sys.Date()`"
 params:
   pdf_mode:
@@ -19,11 +18,13 @@ knitr::opts_chunk$set(
   echo = FALSE
 )
 
-library(magrittr) # For the pipe
-library(dplyr)
-library(tidyr)
-library(forcats)
-library(ggplot2)
+library(pacman)
+p_load(magrittr,
+       dplyr,
+       tidyr,
+       forcats,
+       ggplot2)
+
 source("CV_printing_functions.R")
 
 # Read in all data and initialize a CV printer object
@@ -59,29 +60,37 @@ Aside
 # and connected if they occurred in the same year
 #datadrivencv::build_network_logo(CV$entries_data)
 # Create the data
-data <- data.frame(
-  "Type of Data Professional" = "Data Architect",
-  "Data Modelling" = 9,
-    "Reporting" = 8,
-  "Cloud Experience" = 8,
-  
-  "Data Engineering" = 8,
-  "Business Acumen" = 8,
-  "Automation" = 9
-  #"Experimentation" = 2,
-  #"Stats" = 3,
- # "ML Deployment" = 6
-)
+# data <- data.frame(
+#   "Type of Data Professional" = "Data Architect",
+#   "Data Modelling" = 9,
+#     "Reporting" = 8,
+#   "Cloud Experience" = 8,
+#   
+#   "Data Engineering" = 8,
+#   "Business Acumen" = 8,
+#   "Automation" = 9
+#   #"Experimentation" = 2,
+#   #"Stats" = 3,
+#  # "ML Deployment" = 6
+# )
 
-data_prep_tbl <- data %>%
-  rename(type = 1) %>%
-  pivot_longer(
-    cols = -type
-  ) %>%
+radar_plot_data <- CV$profesional_skills
+
+
+data_prep_tbl <- radar_plot_data %>%
+  mutate(
+    type = "Business Intelligence"
+  ) |> 
+  rename(
+    name = `Type of Data Professional`,
+    value = Value 
+  ) |> 
   mutate(
     type = as_factor(type),
-    name = as_factor(name)
+    name = as_factor(name),
+    value = as.numeric(value)
   )
+
 
 # The trick
 coord_radar <- function (theta = "x", start = 0, direction = 1, clip = "on") {
@@ -103,8 +112,8 @@ basic_radar_plot <- data_prep_tbl %>%
 # Apply styling and additional theming
 styled_plot <- basic_radar_plot +
   theme_minimal() +
-  scale_fill_manual(values = c("navyblue")) +
-  scale_color_manual(values = c("navyblue")) +
+  scale_fill_manual(values = c("forestgreen")) +
+  scale_color_manual(values = c("forestgreen")) +
   labs(
     legend = NULL,
     x = NULL,

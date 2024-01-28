@@ -106,14 +106,9 @@ load_data <- function(cv, data_location, sheet_is_publicly_readable){
     cv$skills        <- read_gsheet(sheet_id = "language_skills")
     cv$text_blocks   <- read_gsheet(sheet_id = "text_blocks")
     cv$contact_info  <- read_gsheet(sheet_id = "contact_info")
-  } else {
-    # Want to go old-school with csvs?
-    cv$entries_data <- readr::read_csv(paste0(data_location, "entries.csv"), skip = 1)
-    cv$skills       <- readr::read_csv(paste0(data_location, "language_skills.csv"), skip = 1)
-    cv$text_blocks  <- readr::read_csv(paste0(data_location, "text_blocks.csv"), skip = 1)
-    cv$contact_info <- readr::read_csv(paste0(data_location, "contact_info.csv"), skip = 1)
-  }
-
+    cv$profesional_skills <- read_gsheet(sheet_id = "profesional_skills")
+  } 
+  
   if(cv$cache_data & !has_cached_data){
     # Make sure we only cache the data and not settings etc.
     readr::write_rds(
@@ -121,7 +116,8 @@ load_data <- function(cv, data_location, sheet_is_publicly_readable){
         entries_data = cv$entries_data,
         skills = cv$skills,
         text_blocks = cv$text_blocks,
-        contact_info = cv$contact_info
+        contact_info = cv$contact_info,
+        profesional_skills = cv$profesional_skills
       ),
       cache_loc
     )
@@ -217,7 +213,9 @@ print_text_block <- function(cv, label){
 
 #' @description Construct a bar chart of skills
 #' @param out_of The relative maximum for skills. Used to set what a fully filled in skill bar is.
-print_skill_bars <- function(cv, out_of = 5, bar_color = "#969696", bar_background = "#d9d9d9", glue_template = "default"){
+print_skill_bars <- function(cv, out_of = 5,
+                             bar_color = "purple",
+                             bar_background = "#d9d9d9", glue_template = "default"){
 
   if(glue_template == "default"){
     glue_template <- "

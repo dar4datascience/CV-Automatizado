@@ -1,27 +1,22 @@
-# This script builds both the HTML and PDF versions of your CV
 
-# If you want to speed up rendering for googlesheets driven CVs you can cache a
-# version of your data This avoids having to fetch from google sheets twice and
-# will speed up rendering. It will also make things nicer if you have a
-# non-public sheet and want to take care of the authentication in an interactive
-# mode.
-# To use, simply uncomment the following lines and run them once.
-# If you need to update your data delete the "ddcv_cache.rds" file and re-run
+library(pacman)
+p_load(here,
+       fs,
+       glue,
+       pagedown,
+       rmarkdown,
+       googlesheets4)
 
-library(tidyverse)
 source("CV_printing_functions.R")
 here::i_am("render_cv.R")
 
 # Profiles
-business_intelligence <- "https://docs.google.com/spreadsheets/d/1UjkIAPFN03q1RJCrNoULZnE_4wDZFZ-CZHH4KFFRz6M/edit#gid=917338460"
+business_intelligence <- "https://docs.google.com/spreadsheets/d/1tOuqM4UL5oN-gUaP6bO1mdf52WTuKBgTYqxk7IJ25s4/edit?usp=sharing"
 
-data_architect <- "https://docs.google.com/spreadsheets/d/15es-Gf2azekVcz58K1b7mlIEi6zXV_AG0-4W0L9Kk3o/edit#gid=917338460"
- 
-data_engineer <- "https://docs.google.com/spreadsheets/d/19EKkQJCjJMKNG2K6-eQ-Ai8uH4zRKhJO6WN8VcBHTAo/edit#gid=917338460"
-
+#gs4_auth()
 
 cv_data <- create_CV_object(
-  data_location = data_engineer,
+  data_location = business_intelligence,
   cache_data = FALSE,
   sheet_is_publicly_readable = FALSE
 )
@@ -47,5 +42,5 @@ rmarkdown::render("CV_job.Rmd",
 print("hellow im here 3")
 # Convert to PDF using Pagedown
 pagedown::chrome_print(input = tmp_html_cv_loc,
-                       output = "danielamievarodriguez_cv.pdf")
+                       output = "aketzali_natividad_martinez.pdf")
 print("hellow im here 4")
