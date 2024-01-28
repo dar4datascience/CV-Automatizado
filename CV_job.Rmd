@@ -149,11 +149,6 @@ if(params$pdf_mode){
 
 ```
 
-```{r}
-
-cat("See the full list of my <i class='fa-solid fa-school'></i> certifications in  <i class='fa-brands fa-linkedin'></i> @[dar-4-ds/details/certifications/](https://www.linkedin.com/in/dar-4-ds/details/certifications/) and <i class='fa-brands fa-google'></i> @[cloudskillsboost](https://www.cloudskillsboost.google/public_profiles/c4664f93-2fd2-446c-a4bc-5a3bf1b35a26).")
-```
-
 
 Contact {#contact}
 --------------------------------------------------------------------------------
@@ -183,7 +178,7 @@ Last updated on `r Sys.Date()`.
 Main
 ================================================================================
 
-Daniel Amieva Rodriguez {#title}
+Aketzali Natividad Martinez {#title}
 --------------------------------------------------------------------------------
 
 ```{r}
